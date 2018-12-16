@@ -98,6 +98,12 @@ GR_PYTHON_INSTALL(
     suomi_100_telemetry_parser.py
     pwsat2_telemetry_parser.py
     pwsat2_submitter.py
+    eseo_packet_crop.py
+    eseo_line_decoder.py
+    check_eseo_crc.py
+    funcube_submit.py
+    eseo_telemetry.py
+    eseo_telemetry_parser.py
     DESTINATION ${GR_PYTHON_DIR}/satellites
 )
 

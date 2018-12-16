@@ -62,6 +62,7 @@ Required dependencies:
   * Phil Karn's KA9Q `libfec`. A fork that builds in modern linux systems can be found
     [here](https://github.com/daniestevez/libfec).
   * [construct](https://construct.readthedocs.io/en/latest/), at least version 2.9.
+  * [requests](https://pypi.org/project/requests/2.7.0/).
 
 The following GNUradio out-of-tree modules are only required for the decoder of
 one particular satellite. You may install only the ones you're interested in.
@@ -231,6 +232,11 @@ telemetry packet in the terminal as soon as it receives it.
     for detailed instructions. D-SAT transmits JPEG images from an onboard
     camera. This decoder includes an image decoder which shows the images in
     real time using feh.
+  * `eseo`
+    [ESEO](https://www.esa.int/Education/ESEO),
+    which transmits 9k6 GFSK telemetry in the 70cm band. It uses a custom protocol
+    vaguely similar to AX.25 with some form of G3RUH scrambling and a
+    (255,239) Reed-Solomon code. You must use FM mode to receive this satellite (437.000MHz).
   * `facsat_1`,
     [FACSAT-1](https://en.wikipedia.org/wiki/FACSAT-1), which transmits
     9k6 GMSK telemetry in the 70cm band. It uses the GomSpace NanoCom AX100
@@ -269,11 +275,6 @@ telemetry packet in the terminal as soon as it receives it.
     which transmits 1k2 or 9k6 AX.25 BPSK telemetry in the 70cm band. It uses a G3RUH
     scrambler. For 1k2 telemetry you must use SSB mode, while for 9k6 telemetry you
     must use wide SSB mode.
-  * `reaktor_hello_world`
-    [Reaktor Hello World](https://reaktorspace.com/reaktor-hello-world/),
-    which transmits 9k6 GFSK telemetry in the 70cm band. It uses a Texas
-    Intruments CC1125 transceiver with a PN9 scrambler and a CRC-16. You must
-    use FM mode to receive this satellite (437.775MHz).
   * `il01`
     [QB50 IL01 (DUCHIFAT-2)](http://www.h-space-lab.org/php/hoopoe-en.php),
     which transmits 9k6 AX.25 BPSK telemetry in the 70cm band. It uses a G3RUH
@@ -286,6 +287,10 @@ telemetry packet in the terminal as soon as it receives it.
     4k8 GMSK telemetry in the 70cm band. It uses the GomSpace NanoCom AX100
     transceiver in ASM+Golay mode. This uses a CCSDS scrambler and a (255,223)
     Reed-Solomon code. You must use FM mode to receive this satellite (437.450MHz).
+  * `itasat1`
+    [ITASAT 1](http://www.itasat.ita.br/),
+    which transmits 1k2 AX.25 BPSK telemetry in the 2m band.
+    You must use SSB mode to receive this satellite (145.860MHz).
   * `jy1sat`
     [JY1-Sat (FUNcube-6)](https://amsat-uk.org/tag/jy1sat/),
     which transmits 1k2 BPSK
@@ -369,6 +374,11 @@ telemetry packet in the terminal as soon as it receives it.
     for the instructions.
     For 1k2 telemetry you must use SSB mode, while for 9k6 telemetry you
     must use wide SSB mode (435.275MHz).
+  * `reaktor_hello_world`
+    [Reaktor Hello World](https://reaktorspace.com/reaktor-hello-world/),
+    which transmits 9k6 GFSK telemetry in the 70cm band. It uses a Texas
+    Intruments CC1125 transceiver with a PN9 scrambler and a CRC-16. You must
+    use FM mode to receive this satellite (437.775MHz).
   * `shaonian_xing`
     [Shaonian Xing (MXSat-1)](https://space.skyrocket.de/doc_sdat/shaonian-xing.htm),
     which transmits 9k6 AX.25 BPSK telemetry in the 70cm band. It uses a G3RUH
@@ -441,7 +451,7 @@ it useful, I have added `generic_4k8_fsk_ax25`, `generic_9k6_fsk_ax25` and
 radio. For the time being, I do not plan to add a 1k2 AFSK decoder, since it is not
 so easy to implement a good AFSK decoder (a good AGC is a challenge, for instance).
 
-## Submitting telemetry
+## Submitting telemetry to SatNOGS
 
 To sumbit telemetry to the [SatNOGS database](http://db.satnogs.org/) (or
 another SiDS telemetry server), you have to specify your callsign and
@@ -486,6 +496,15 @@ the NORAD ID in [celestrak](http://celestrak.com/satcat/search.asp).
 
 You must start the software TNC first and the run the `.py` script or the `.grc`
 file for `kiss_submitter`.
+
+## Submitting telemetry to FUNcube
+
+The flowgraphs for the different FUNcube satellites/payloads also support
+submitting telemetry to the FUNcube server. To use this, you need to obtain the
+"Site Id" (your username) and "Auth code" from your account on the FUNcube
+server. These parameters can then be indicated by using the `--site-id` and
+`--auth-code` if using the `.py` script or by editing the boxes in the lower
+right part of the flowgraph if using the `.grc` file.
 
 ## Submitting telemetry to HIT severs (LilacSat, BY70-1, etc.)
 
